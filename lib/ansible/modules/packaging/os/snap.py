@@ -17,6 +17,38 @@
 # along with this software.  If not, see <http://www.gnu.org/licenses/>.
 
 
+DOCUMENTATION = '''
+module: snap
+short_description: Manages snap packages
+description:
+  - Manages snaps, which is universal Linux packages.
+options:
+  name:
+    description:
+      -
+    required: false
+    default: null
+  state:
+    description:
+      -
+    required: false
+    default: present
+    choices: [ "absent", "present" ]
+  channel:
+    description:
+      -
+    required: false
+    default: null
+    choices: [ "stable", "candidate", "beta", "edge" ]
+  mode:
+    description:
+      -
+    required: false
+    default: null
+    choices: [ "devmode", "jailmode", "classic" ]
+'''
+
+
 def main():
     pass
 
