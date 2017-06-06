@@ -49,8 +49,20 @@ options:
 '''
 
 
+from ansible.module_utils.basic import AnsibleModule
+
+
 def main():
-    pass
+    argument_spec = dict(
+        name=dict(default=None, type='string'),
+        state=dict(default='present', choices=['absent', 'present']),
+        channel=dict(default=None, choices=['stable', 'candidate', 'beta', 'edge']),
+        mode=dict(default=None, choices=['devmode', 'jailmode', 'classic'])
+    )
+
+    module = AnsibleModule(
+        argument_spec=argument_spec
+    )
 
 
 if __name__ == '__main__':
