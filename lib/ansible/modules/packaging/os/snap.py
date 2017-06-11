@@ -23,7 +23,7 @@ short_description: Manages snap packages
 description:
     -   Manages snaps, which is universal Linux packages.
 options:
-    name:
+    package:
         description:
             -
         required: false
@@ -54,7 +54,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 def main():
     argument_spec = dict(
-        name=dict(default=None, type='string'),
+        package=dict(default=None, type='string'),
         state=dict(default='present', choices=['absent', 'present']),
         channel=dict(default=None, choices=['stable', 'candidate', 'beta', 'edge']),
         mode=dict(default=None, choices=['devmode', 'jailmode', 'classic'])
