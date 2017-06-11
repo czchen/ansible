@@ -52,6 +52,32 @@ options:
 from ansible.module_utils.basic import AnsibleModule
 
 
+def _get_channel_args(channel):
+    if channel is None:
+        return []
+    if channel == 'stable':
+        return ['--stable']
+    if channel == 'candidate':
+        return ['--candidate']
+    if channel == 'beta':
+        return ['--beta']
+    if channel == 'edge':
+        return ['--edge']
+    assert 'Invalid channel {}'.format(channel)
+
+
+def _get_mode_args(mode):
+    if mode is None:
+        return []
+    if mode == 'classic':
+        return ['--classic']
+    if mode == 'jailmode':
+        return ['--jailmode']
+    if mode == 'devmode':
+        return ['--devmode']
+    assert 'Invalid mode {}'.format(mode)
+
+
 def main():
     argument_spec = dict(
         package=dict(default=None, type='string'),
@@ -63,6 +89,24 @@ def main():
     module = AnsibleModule(
         argument_spec=argument_spec
     )
+
+    package = module.params['package']
+
+    if package:
+        state = module.params['state'] or 'present'
+        if state == 'present':
+            command = ['snap', 'install', package]
+            command.extend(_get_channel_args(module.params['channel']))
+            command.extend(_get_mode_args(module.params['mode']))
+            rc, out, err = module.run_command(command)
+
+        elif state == 'absent':
+            pass
+
+        else:
+            assert 'Invalid state {}'.format(state)
+    else:
+        pass
 
 
 if __name__ == '__main__':
